@@ -1,0 +1,52 @@
+#include "sunsprite.h"
+#include "globals.h"
+#include <math.h>
+
+// CONSTRUCTOR /////////////////////////////////////////////////////////////////////////////////
+cSunSprite::cSunSprite()
+{
+	m_x = 500;
+	m_y = 225;
+
+	m_w = 250;
+	m_h = 250;
+
+	m_centre_x = (int)(m_x + m_w*0.5f);
+	m_centre_y = (int)(m_y + m_h*0.5f);
+
+	m_points[0].x = m_x;			// Upper left
+	m_points[0].y = m_y;
+	m_points[1].x = m_x + m_w;	// Upper right	
+	m_points[1].y = m_y;
+	m_points[2].x = m_x;			// Lower left
+	m_points[2].y = m_y + m_h;
+
+	SetDisplayBitmap("Images/sun.bmp");
+	SetDisplayBitmask("Images/holemask10.bmp");
+}
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+// DESTRUCTOR //////////////////////////////////////////////////////////////////////////////////
+cSunSprite::~cSunSprite()
+{
+	// Nothing to clean-up
+}
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+// SETDISPLAYBITMASK FUNCTION //////////////////////////////////////////////////////////////////
+void cSunSprite::SetDisplayBitmask(LPSTR szFileName)
+{
+	this->m_bitmask = (HBITMAP)LoadImage(NULL, szFileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+}
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+// RENDER FUNCTION /////////////////////////////////////////////////////////////////////////////
+void cSunSprite::Render(void)
+{
+	HBITMAP originalBitMap;
+	originalBitMap = (HBITMAP)SelectObject(bitmapHDC, m_bitmap);
+	PlgBlt(backHDC, m_points, bitmapHDC, 0, 0, m_w,
+		m_h, m_bitmask, 0, 0);
+	SelectObject(bitmapHDC,originalBitMap); 
+}
+////////////////////////////////////////////////////////////////////////////////////////////////

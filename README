@@ -1,0 +1,10 @@
+Black Hole
+
+Created Spring 2011
+
+A Windows game using the Boost Libraries for threading.
+The player controls a black hole using the arrow keys.
+The sun in the centre of the screen emits light particles which the player must collect by
+colliding with them.
+Collect enough particles before the sun goes supernova.
+
